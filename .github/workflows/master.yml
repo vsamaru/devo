@@ -3,20 +3,17 @@ on:
   push:
     branches:
       - master
-    tags:
-      - '*'
-  release:
-    types: [published]
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2-beta
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: '14'
-    - uses: actions/cache@v2
+        node-version: '16'
+    - uses: actions/cache@v3
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
         path: ~/.npm 
@@ -25,7 +22,7 @@ jobs:
           ${{ runner.OS }}-node-
           ${{ runner.OS }}-
     
-    - run: npm ci
+    - run: npm install
     - run: npm run build
     - run: npm run test
 
